@@ -172,3 +172,10 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# clinerules
+.clinerules/
+memory-bank/
+
+# devcontainer
+.devcontainer/

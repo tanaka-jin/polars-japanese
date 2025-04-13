@@ -1,0 +1,60 @@
+[project]
+name = "polars-japanese"
+version = "0.1.0"
+description = "polarsの日本向けのplugin library"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "jaconv>=0.4.0",
+    "japanera>=2.1.2",
+    "jpholiday>=1.0.1",
+    "kanjize>=1.5.0",
+    "polars>=1.27.1",
+    "pre-commit>=4.2.0",
+] # Reset dependencies
+
+[project.urls]
+Homepage = "https://github.com/<your_username>/polars-japanese"
+Repository = "https://github.com/<your_username>/polars-japanese"
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.ruff]
+line-length = 79
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "F",  # Pyflakes
+    "W",  # pycodestyle warnings
+    "I",  # isort
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"] # Add src to pythonpath
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["src"]
+omit = ["tests/*"]
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true
+
+[tool.mypy]
+files = ["src"]
+python_version = "3.9" # Match requires-python
+warn_return_any = true
+warn_unused_configs = true
+
+[project.optional-dependencies]
+dev = [
+    "mypy>=1.15.0",
+    "pre-commit>=4.2.0",
+    "pytest>=8.3.5",
+    "pytest-cov>=6.1.1",
+    "ruff>=0.11.5",
+]
