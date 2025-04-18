@@ -3,6 +3,12 @@ name = "polars-japanese"
 version = "0.1.0"
 description = "polarsの日本向けのplugin library"
 readme = "README.md"
+long-description-content-type = "text/markdown"
+authors = [
+  { name="Jin Tanaka", email="jin3355.eco@gmail.com" }
+]
+license = { file="LICENSE" }
+
 requires-python = ">=3.9"
 dependencies = [
     "jaconv>=0.4.0",
