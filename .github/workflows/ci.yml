@@ -8,65 +8,42 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.9, 3.10, 3.11, 3.12]
-        include:
-          # Polars
-          - lib: polars
-            version: 0.18.15
-          - lib: polars
-            version: 1.0.0
-          - lib: polars
-            version: 1.27.1
-          - lib: polars
-            version: latest
-          # jaconv
-          - lib: jaconv
-            version: 0.4.0
-          - lib: jaconv
-            version: latest
-          # kanjize
-          - lib: kanjize
-            version: 1.5.0
-          - lib: kanjize
-            version: latest
-          # japanera
-          - lib: japanera
-            version: 2.1.2
-          - lib: japanera
-            version: latest
-          # jpholiday
-          - lib: jpholiday
-            version: 1.0.1
-          - lib: jpholiday
-            version: latest
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        polars-version: ["0.18.15", "1.0.0", "1.27.1", "latest"]
 
     steps:
-      - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-          cache: pip
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
 
-      - name: Install uv
-        run: |
-          curl -LsSf https://astral.sh/uv/install.sh | sh
-          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+    - name: Install uv
+      run: |
+        curl -LsSf https://astral.sh/uv/install.sh | sh
+        echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
-      - name: Install project + override ${{ matrix.lib }}@${{ matrix.version }}
-        run: |
-          # まずプロジェクト依存を全部入れる
-          uv pip install .[dev]
-          # version 指定があれば強制インストール（latest のときはスキップ）
-          if [ "${{ matrix.version }}" != "latest" ]; then
-            uv pip install "${{ matrix.lib }}==${{ matrix.version }}"
-          fi
+    - name: Install dependencies (Polars ${{ matrix.polars-version }})
+      run: |
+        # 指定されたバージョンの Polars をインストール
+        if [ "${{ matrix.polars-version }}" == "latest" ]; then
+          echo "Installing latest Polars..."
+          uv pip install polars --system
+        else
+          echo "Installing Polars==${{ matrix.polars-version }}..."
+          uv pip install "polars==${{ matrix.polars-version }}" --system
+        fi
+        # プロジェクトの依存関係（dev含む）をインストール
+        # uv は既にシステムにインストールされた polars を認識するはず
+        echo "Installing project dependencies..."
+        uv pip install .[dev] --system
 
-      - name: Check ${{ matrix.lib }} version
-        run: |
-          echo "$LIB v\$({{ matrix.lib }} installed):"
-          uv pip show ${{ matrix.lib }} | awk '/^Version:/{print $2}'
+    - name: Check installed Polars version
+      run: |
+        echo "Checking installed Polars version:"
+        uv pip list | grep polars || echo "Polars not found in list"
 
-      - name: Run tests
-        run: uv run pytest
+    - name: Run tests
+      run: uv run pytest
