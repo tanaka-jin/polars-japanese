@@ -1,0 +1,17 @@
+# .github/dependabot.yml
+version: 2
+updates:
+  # Python dependencies (managed via uv/pip)
+  - package-ecosystem: "pip"
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly"
+    # Assignees and reviewers can be added here if needed
+    # assignees:
+    #   - "your-github-username"
+    # reviewers:
+    #   - "your-github-username"
+    # Labels can be added to the PRs created by Dependabot
+    # labels:
+    #   - "dependencies"
+    #   - "python"
