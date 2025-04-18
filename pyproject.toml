@@ -9,8 +9,7 @@ dependencies = [
     "japanera>=2.1.2",
     "jpholiday>=1.0.1",
     "kanjize>=1.5.0",
-    "polars>=1.27.1",
-    "pre-commit>=4.2.0",
+    "polars>=1.0.1",
 ]
 
 [project.urls]
@@ -36,9 +35,6 @@ select = [
 pythonpath = ["src"] # Add src to pythonpath
 testpaths = ["tests"]
 
-[tool.uv]
-dev-dependencies = ["pytest"]
-
 [tool.coverage.run]
 source = ["src"]
 omit = ["tests/*"]
@@ -49,7 +45,7 @@ show_missing = true
 
 [tool.mypy]
 files = ["src"]
-python_version = "3.9" # Match requires-python
+python_version = "3.9"
 warn_return_any = true
 warn_unused_configs = true
 
