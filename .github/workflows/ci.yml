@@ -1,0 +1,49 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        polars-version: ["0.18.15", "1.0.0", "1.27.1", "latest"]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install uv
+      run: |
+        curl -LsSf https://astral.sh/uv/install.sh | sh
+        echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+    - name: Install dependencies (Polars ${{ matrix.polars-version }})
+      run: |
+        # 指定されたバージョンの Polars をインストール
+        if [ "${{ matrix.polars-version }}" == "latest" ]; then
+          echo "Installing latest Polars..."
+          uv pip install polars --system
+        else
+          echo "Installing Polars==${{ matrix.polars-version }}..."
+          uv pip install "polars==${{ matrix.polars-version }}" --system
+        fi
+        # プロジェクトの依存関係（dev含む）をインストール
+        # uv は既にシステムにインストールされた polars を認識するはず
+        echo "Installing project dependencies..."
+        uv pip install .[dev] --system
+
+    - name: Check installed Polars version
+      run: |
+        echo "Checking installed Polars version:"
+        uv pip list | grep polars || echo "Polars not found in list"
+
+    - name: Run tests
+      run: uv run pytest
