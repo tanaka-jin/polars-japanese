@@ -11,7 +11,7 @@ dependencies = [
     "kanjize>=1.5.0",
     "polars>=1.27.1",
     "pre-commit>=4.2.0",
-] # Reset dependencies
+]
 
 [project.urls]
 Homepage = "https://github.com/<your_username>/polars-japanese"
