@@ -3,6 +3,8 @@ from datetime import date
 import polars as pl
 from polars.testing import assert_series_equal
 
+import polars_japanese.common  # noqa: F401
+
 
 def test_is_holiday():
     """Test the ja.is_holidat expression."""

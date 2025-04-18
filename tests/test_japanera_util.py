@@ -6,7 +6,7 @@ from polars.testing import assert_series_equal
 
 # Import the module to ensure the namespace is registered
 try:
-    import polars_ja_plugin.common  # noqa: F401
+    import polars_japanese.common  # noqa: F401
 except ModuleNotFoundError:
     pytest.skip(
         "Could not import polars_ja_plugin.common. "
