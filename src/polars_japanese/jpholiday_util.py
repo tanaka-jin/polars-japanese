@@ -33,7 +33,9 @@ class JpholidayExpr:
             pl.Expr: 営業日の場合はTrue、そうでない場合はFalse。
         """
         return self._expr.map_elements(
-            lambda x: not jpholiday.is_holiday(x)
+            lambda x: isinstance(x, date)
+            and not jpholiday.is_holiday(x)
+            and x.weekday() < 5  # 土日(5,6)を除外
             if isinstance(x, date)
             else None,
             return_dtype=pl.Boolean,
