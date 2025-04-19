@@ -4,15 +4,7 @@ import polars as pl
 import pytest
 from polars.testing import assert_series_equal
 
-# Import the module to ensure the namespace is registered
-try:
-    import polars_japanese.common  # noqa: F401
-except ModuleNotFoundError:
-    pytest.skip(
-        "Could not import polars_ja_plugin.common. "
-        "Ensure package is installed correctly.",
-        allow_module_level=True,
-    )
+import polars_japanese  # noqa: F401
 
 
 def test_expr_to_datetime_ignore_erros() -> None:

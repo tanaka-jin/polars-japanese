@@ -1,7 +1,7 @@
 import polars as pl
 from polars.testing import assert_series_equal
 
-import polars_japanese.common  # noqa: F401
+import polars_japanese  # noqa: F401
 
 
 def test_to_half_width():
