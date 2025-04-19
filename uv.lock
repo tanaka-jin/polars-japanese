@@ -289,7 +289,6 @@ dependencies = [
     { name = "jpholiday" },
     { name = "kanjize" },
     { name = "polars" },
-    { name = "pre-commit" },
 ]
 
 [package.optional-dependencies]
@@ -308,8 +307,7 @@ requires-dist = [
     { name = "jpholiday", specifier = ">=1.0.1" },
     { name = "kanjize", specifier = ">=1.5.0" },
     { name = "mypy", marker = "extra == 'dev'", specifier = ">=1.15.0" },
-    { name = "polars", specifier = ">=1.27.1" },
-    { name = "pre-commit", specifier = ">=4.2.0" },
+    { name = "polars", specifier = ">=1.0.1" },
     { name = "pre-commit", marker = "extra == 'dev'", specifier = ">=4.2.0" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.3.5" },
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=6.1.1" },

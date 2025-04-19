@@ -58,6 +58,8 @@ print(df)
 # │ 56             ┆ 1989-12-31          ┆ false      ┆ ﾃﾞｰﾀ     ┆ データ     │
 # │ null           ┆ 1970-12-04          ┆ true       ┆ 123     ┆ 123        │
 # └────────────────┴─────────────────────┴────────────┴─────────┴────────────┘
+
+df.ja.to_csv("output_sjis.csv", encoding="shift_jis")
 ```
 
 ## 主な機能 (Features)
@@ -73,3 +75,5 @@ print(df)
     *   `to_datetime()`: 和暦文字列を西暦日付に変換します
 *   **祝日判定:** 指定された日付が日本の祝日かどうかを判定します (Powered by [jpholiday](https://github.com/jpholiday/jpholiday))。
     *   `is_holiday()`: 日付が祝日であれば `True` を返します
+*   **CSVエンコーディング指定出力:** DataFrameを指定したエンコーディングでCSVファイルに出力します。
+    *   `DataFrame.ja.to_csv(path, encoding="shift_jis", **kwargs)`: DataFrameをCSVファイルに書き込みます。

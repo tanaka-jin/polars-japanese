@@ -1,8 +1,9 @@
-from typing import Optional
+import pathlib
+from typing import Optional, Union
 
 import kanjize
 import polars as pl
-from polars.api import register_expr_namespace
+from polars.api import register_dataframe_namespace, register_expr_namespace
 
 from .jaconv_util import JaconvExpr
 from .japanera_util import JapaneraExpr
@@ -86,3 +87,45 @@ class JapaneseExpr:
         指定された日付が営業日かどうかを判定します。
         """
         return JpholidayExpr(self._expr).is_business_day()
+
+
+@register_dataframe_namespace("ja")
+class JapaneseDataFrame:
+    def __init__(self, df: pl.DataFrame):
+        self._df = df
+
+    def to_csv(
+        self,
+        path: Union[str, pathlib.Path],
+        encoding: str = "utf-8",
+        **kwargs,
+    ) -> None:
+        """
+        指定されたエンコーディングでDataFrameをCSVファイルに書き込みます。
+
+        Parameters
+        ----------
+        path : Union[str, pathlib.Path]
+            CSVファイルを書き込むパス。
+        encoding : str, default "utf-8"
+            出力ファイルに使用するエンコーディング。
+        **kwargs
+            `polars.DataFrame.write_csv` に渡される追加のキーワード引数。
+
+        Examples
+        --------
+        >>> import polars as pl
+        >>> import polars_japanese # noqa: F401
+        >>> df = pl.DataFrame({"col1": ["テスト", "データ"], "col2": [1, 2]})
+        >>> # Shift-JISエンコーディングでCSVに書き込む
+        >>> # df.ja.to_csv("output.csv", encoding="shift_jis") # doctest: +SKIP
+        """
+        try:
+            # ファイルを開く前にエンコーディングが有効か確認
+            "".encode(encoding)
+        except LookupError:
+            raise LookupError(f"不明なエンコーディングです: {encoding}")
+
+        csv_string = self._df.write_csv(**kwargs)
+        with open(path, "w", encoding=encoding) as fw:
+            fw.write(csv_string)
