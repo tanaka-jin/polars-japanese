@@ -5,6 +5,9 @@
 ### Added
 - Added `DataFrame.ja.to_csv` method to write DataFrame to CSV with specified encoding.
 
+### Fixed
+- Fixed a bug in `is_businessday` function.
+
 ## [0.1.0] - 2024-04-18
 
 ### Added
