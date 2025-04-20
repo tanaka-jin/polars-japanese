@@ -16,6 +16,15 @@ class JapaneraExpr:
     ) -> pl.Expr:
         """
         Polars の Date 型を和暦文字列に変換します。
+
+        Args:
+            format (str, optional): 出力する和暦のフォーマット文字列。
+                デフォルトは "%-K%-y年%m月%d日"。
+            raise_error (bool, optional):
+                変換エラー時に例外を発生させるかどうか。デフォルトは True。
+
+        Returns:
+            pl.Expr: 和暦文字列に変換されたエクスプレッション。
         """
 
         def _to_wareki(
@@ -46,6 +55,15 @@ class JapaneraExpr:
     ) -> pl.Expr:
         """
         和暦文字列を Polars の Date 型に変換します。
+
+        Args:
+            format (str, optional): 和暦のフォーマット文字列。
+                デフォルトは "%-K%-y年%m月%d日"。
+            raise_error (bool, optional):
+                変換エラー時に例外を発生させるかどうか。デフォルトは True。
+
+        Returns:
+            pl.Expr: Date 型に変換されたエクスプレッション。
         """
 
         def _to_datetime(
