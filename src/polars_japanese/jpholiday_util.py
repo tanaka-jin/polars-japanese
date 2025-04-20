@@ -17,7 +17,8 @@ class JpholidayExpr:
         指定された日付が祝日かどうかを判定します。
 
         Returns:
-            pl.Expr: 祝日の場合はTrue、そうでない場合はFalse。
+            pl.Expr: 祝日の場合は True、そうでない場合は False を含む
+                Boolean エクスプレッション。
         """
         return self._expr.map_elements(
             lambda x: jpholiday.is_holiday(x) if isinstance(x, date) else None,
@@ -28,9 +29,11 @@ class JpholidayExpr:
     def is_business_day(self) -> pl.Expr:
         """
         指定された日付が営業日かどうかを判定します。
+        (土日祝日でない場合に True)
 
         Returns:
-            pl.Expr: 営業日の場合はTrue、そうでない場合はFalse。
+            pl.Expr: 営業日の場合は True、そうでない場合は False を含む
+                Boolean エクスプレッション。
         """
         return self._expr.map_elements(
             lambda x: isinstance(x, date)

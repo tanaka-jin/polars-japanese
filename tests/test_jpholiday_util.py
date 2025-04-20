@@ -7,7 +7,7 @@ import polars_japanese  # noqa: F401
 
 
 def test_is_holiday():
-    """Test the ja.is_holidat expression."""
+    """祝日判定ができることを確認"""
     data = [
         date(2023, 1, 1),
         date(2023, 1, 9),
@@ -28,7 +28,7 @@ def test_is_holiday():
 
 
 def test_is_business_day():
-    """Test the ja.is_business_day expression."""
+    """営業日判定ができることを確認"""
     data = [
         date(2023, 1, 1),  # 祝日
         date(2023, 1, 2),  # 振替休日

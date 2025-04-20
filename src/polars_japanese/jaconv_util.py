@@ -8,8 +8,11 @@ class JaconvExpr:
 
     def to_half_width(self) -> pl.Expr:
         """
-        Convert full-width characters in the expression's string output
-        to half-width. Applies to Katakana, ASCII, and digits.
+        エクスプレッションの文字列に含まれる全角文字を半角に変換します。
+        カタカナ、ASCII、数字に適用されます。
+
+        Returns:
+            pl.Expr: 半角に変換された文字列を含むエクスプレッション。
         """
         return self._expr.map_elements(
             lambda x: jaconv.z2h(x, kana=True, ascii=True, digit=True)
@@ -21,8 +24,11 @@ class JaconvExpr:
 
     def to_full_width(self) -> pl.Expr:
         """
-        Convert half-width characters in the expression's string output
-        to full-width. Applies to Katakana, ASCII, and digits.
+        エクスプレッションの文字列に含まれる半角文字を全角に変換します。
+        カタカナ、ASCII、数字に適用されます。
+
+        Returns:
+            pl.Expr: 全角に変換された文字列を含むエクスプレッション。
         """
         return self._expr.map_elements(
             lambda x: jaconv.h2z(x, kana=True, ascii=True, digit=True)
@@ -34,7 +40,10 @@ class JaconvExpr:
 
     def normalize(self) -> pl.Expr:
         """
-        正規化処理
+        エクスプレッションの文字列の正規化処理
+
+        Returns:
+            pl.Expr: 正規化された文字列を含むエクスプレッション。
         """
         return self._expr.map_elements(
             lambda x: jaconv.normalize(x) if x is not None else None,

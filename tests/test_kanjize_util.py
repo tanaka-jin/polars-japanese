@@ -5,7 +5,7 @@ import polars_japanese  # noqa: F401
 
 
 def test_to_kanji():
-    """Test the ja.to_kanji expression."""
+    """数値を漢数字に変換できることを確認"""
     data = [123, None]
     series = pl.Series("test", data)
     expected_data = ["百二十三", None]
@@ -20,7 +20,7 @@ def test_to_kanji():
 
 
 def test_to_number():
-    """Test the ja.to_number expression."""
+    """漢数字を数値に変換できることを確認"""
     data = ["百二十三", None]
     series = pl.Series("test", data)
     expected_data = [123, None]

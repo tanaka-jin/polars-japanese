@@ -12,7 +12,14 @@ class KanjizeExpr:
         self, config: Optional[kanjize.KanjizeConfiguration] = None
     ) -> pl.Expr:
         """
-        Convert a number to kanji (Japanese numeral).
+        数値を漢数字に変換します。
+
+        Args:
+            config (Optional[kanjize.KanjizeConfiguration], optional):
+                kanjize の設定。デフォルトは None。
+
+        Returns:
+            pl.Expr: 漢数字文字列に変換されたエクスプレッション。
         """
         return self._expr.map_elements(
             lambda x: kanjize.number2kanji(x, config=config)
@@ -24,7 +31,10 @@ class KanjizeExpr:
 
     def to_number(self) -> pl.Expr:
         """
-        Convert kanji (Japanese numeral) to a number.
+        漢数字を数値に変換します。
+
+        Returns:
+            pl.Expr: 数値に変換されたエクスプレッション (Int64)。
         """
         return self._expr.map_elements(
             lambda x: kanjize.kanji2number(x) if x is not None else None,
