@@ -5,7 +5,7 @@ import polars_japanese  # noqa: F401
 
 
 def test_to_half_width():
-    """Test the ja.to_half_width expression."""
+    """ja.to_half_width 式をテストします。"""
     data = [
         "アイウエオ",
         "ｶﾞｷﾞｸﾞｹﾞｺﾞ",
@@ -40,7 +40,7 @@ def test_to_half_width():
 
 
 def test_to_full_width():
-    """Test the ja.to_full_width expression."""
+    """ja.to_full_width 式をテストします。"""
     data = [
         "ｱｲｳｴｵ",
         "ｶﾞｷﾞｸﾞｹﾞｺﾞ",
@@ -75,7 +75,7 @@ def test_to_full_width():
 
 
 def test_to_half_width_mixed():
-    """Test ja.to_half_width with mixed characters."""
+    """ja.to_half_width を混合文字でテストします。"""
     data = [
         "全角スペース　と半角スペース ",
         "数字１２３と数字123",
@@ -96,7 +96,7 @@ def test_to_half_width_mixed():
 
 
 def test_to_full_width_mixed():
-    """Test ja.to_full_width with mixed characters."""
+    """ja.to_full_width を混合文字でテストします。"""
     data = [
         "全角スペース　と半角スペース ",
         "数字１２３と数字123",
@@ -117,7 +117,7 @@ def test_to_full_width_mixed():
 
 
 def test_normalize():
-    """Test ja.normalize."""
+    """ja.normalize をテストします。"""
     data = ["ﾃｽﾄ", "ＡＢＣ", "123"]
     series = pl.Series("test", data)
     expected_data = ["テスト", "ABC", "123"]

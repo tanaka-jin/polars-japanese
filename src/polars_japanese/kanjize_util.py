@@ -12,7 +12,7 @@ class KanjizeExpr:
         self, config: Optional[kanjize.KanjizeConfiguration] = None
     ) -> pl.Expr:
         """
-        Convert a number to kanji (Japanese numeral).
+        数値を漢字（日本の数字）に変換します。
         """
         return self._expr.map_elements(
             lambda x: kanjize.number2kanji(x, config=config)
@@ -24,7 +24,7 @@ class KanjizeExpr:
 
     def to_number(self) -> pl.Expr:
         """
-        Convert kanji (Japanese numeral) to a number.
+        漢字（日本の数字）を数値に変換します。
         """
         return self._expr.map_elements(
             lambda x: kanjize.kanji2number(x) if x is not None else None,

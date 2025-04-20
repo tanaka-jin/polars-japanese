@@ -18,15 +18,15 @@ class JapaneseExpr:
 
     def to_half_width(self) -> pl.Expr:
         """
-        Convert full-width characters in the expression's string output
-        to half-width. Applies to Katakana, ASCII, and digits.
+        表現の文字列出力に含まれる全角文字を半角に変換します。
+        カタカナ、ASCII、数字に適用されます。
         """
         return JaconvExpr(self._expr).to_half_width()
 
     def to_full_width(self) -> pl.Expr:
         """
-        Convert half-width characters in the expression's string output
-        to full-width. Applies to Katakana, ASCII, and digits.
+        表現の文字列出力に含まれる半角文字を全角に変換します。
+        カタカナ、ASCII、数字に適用されます。
         """
         return JaconvExpr(self._expr).to_full_width()
 
@@ -52,9 +52,8 @@ class JapaneseExpr:
         raise_error: bool = True,
     ) -> pl.Expr:
         """
-        Convert the expression's Date or Datetime output to Wareki
-        (Japanese era)
-        string representation.
+        表現のDateまたはDatetime出力を和暦（日本の元号）の
+        文字列形式に変換します。
         """
         return JapaneraExpr(self._expr).to_wareki(
             format=format, raise_error=raise_error
@@ -64,15 +63,14 @@ class JapaneseExpr:
         self, config: Optional[kanjize.KanjizeConfiguration] = None
     ) -> pl.Expr:
         """
-        Convert the expression's Int output to Kanji (Japanese numeral)
-        string representation.
+        表現のInt出力を漢字（日本の数字）の
+        文字列形式に変換します。
         """
         return KanjizeExpr(self._expr).to_kanji(config=config)
 
     def to_number(self) -> pl.Expr:
         """
-        Convert the expression's string output of Kanji (Japanese numeral)
-        to number.
+        漢字（日本の数字）の表現の文字列出力を数値に変換します。
         """
         return KanjizeExpr(self._expr).to_number()
 
@@ -118,7 +116,7 @@ class JapaneseDataFrame:
         >>> import polars_japanese # noqa: F401
         >>> df = pl.DataFrame({"col1": ["テスト", "データ"], "col2": [1, 2]})
         >>> # Shift-JISエンコーディングでCSVに書き込む
-        >>> # df.ja.to_csv("output.csv", encoding="shift_jis") # doctest: +SKIP
+        >>> # df.ja.to_csv("output.csv", encoding="shift_jis")
         """
         try:
             # ファイルを開く前にエンコーディングが有効か確認

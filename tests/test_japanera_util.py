@@ -8,7 +8,7 @@ import polars_japanese  # noqa: F401
 
 
 def test_expr_to_datetime_ignore_erros() -> None:
-    """Test the ja.to_datetime expression."""
+    """和暦を日付型に変換できることを確認(エラー無視)"""
     data = [
         "令和6年4月12日",
         "平成1年1月8日",
@@ -39,7 +39,7 @@ def test_expr_to_datetime_ignore_erros() -> None:
 
 
 def test_expr_to_datetime_raise_error() -> None:
-    """Test the ja.to_datetime expression with raise_error=True."""
+    """和暦を日付型に変換できることを確認(エラー発生)"""
     data = [
         "令和6年4月12日",
         "平成1年1月8日",
@@ -57,7 +57,7 @@ def test_expr_to_datetime_raise_error() -> None:
 
 
 def test_expr_to_datetime_with_format() -> None:
-    """Test the ja.to_datetime expression with a custom format."""
+    """フォーマットを指定して和暦を日付型に変換できることを確認"""
     data = [
         "R6.04.12",
         "H1.01.08",
@@ -88,7 +88,7 @@ def test_expr_to_datetime_with_format() -> None:
 
 
 def test_expr_to_wareki() -> None:
-    """Test the ja.to_wareki expression."""
+    """日付型を和暦に変換できることを確認"""
     data = [
         dt.date(2024, 4, 12),
         dt.date(1989, 1, 8),
@@ -117,7 +117,7 @@ def test_expr_to_wareki() -> None:
 
 
 def test_expr_to_wareki_with_format() -> None:
-    """Test the ja.to_wareki expression with a custom format."""
+    """フォーマットを指定して日付型を和暦に変換できることを確認"""
     data = [
         dt.date(2024, 4, 12),
         dt.date(1989, 1, 8),
