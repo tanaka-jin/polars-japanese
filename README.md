@@ -11,6 +11,10 @@ Polars DataFrame/Expression API に、日本語処理や日本固有の操作に
 
 `polars-japanese` は、データ分析ライブラリ [Polars](https://pola.rs/) の強力な機能を活用しつつ、日本語特有のデータ処理（全角/半角変換、漢数字変換、和暦変換、祝日判定など）を容易に行えるように設計されています。 Polars の Expression API を拡張し、`.ja` アクセサを通じて直感的にこれらの機能を利用できます。
 
+## ドキュメント (Documentation)
+
+https://polars-japanese.readthedocs.io/ja/latest/
+
 
 ## インストール (Installation)
 

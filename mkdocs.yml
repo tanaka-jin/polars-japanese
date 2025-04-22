@@ -1,7 +1,7 @@
 site_name: polars-japanese
 site_description: 'Polars plugin library for Japanese specific features.'
 site_author: 'Jin Tanaka'
-site_url: 'https://tanaka-jin.github.io/polars-japanese/' # Replace with actual URL later
+site_url: 'https://polars-japanese.readthedocs.io/ja/latest/'
 
 repo_url: 'https://github.com/tanaka-jin/polars-japanese'
 repo_name: 'tanaka-jin/polars-japanese'
