@@ -1,5 +1,5 @@
 import pathlib
-from typing import Optional, Union
+from typing import Any, Optional, Union
 
 import kanjize
 import polars as pl
@@ -53,13 +53,14 @@ class JapaneseExpr:
 
         Args:
             format (str, optional): 和暦のフォーマット文字列。
-                デフォルトは "%-K%-y年%m月%d日"。
             raise_error (bool, optional):
                 変換エラー時に例外を発生させるかどうか。
-                デフォルトは True。
 
         Returns:
             pl.Expr: Date 型に変換されたエクスプレッション。
+
+        References:
+            <https://japanera.readthedocs.io/en/latest/>
         """
         return JapaneraExpr(self._expr).to_datetime(
             format=format, raise_error=raise_error
@@ -75,13 +76,14 @@ class JapaneseExpr:
 
         Args:
             format (str, optional): 出力する和暦のフォーマット文字列。
-                デフォルトは "%-K%-Y年%m月%d日"。
             raise_error (bool, optional):
                 変換エラー時に例外を発生させるかどうか。
-                デフォルトは True。
 
         Returns:
             pl.Expr: 和暦文字列に変換されたエクスプレッション。
+
+        References:
+            <https://japanera.readthedocs.io/en/latest/>
         """
         return JapaneraExpr(self._expr).to_wareki(
             format=format, raise_error=raise_error
@@ -95,10 +97,13 @@ class JapaneseExpr:
 
         Args:
             config (Optional[kanjize.KanjizeConfiguration], optional):
-                kanjize の設定。デフォルトは None。
+                kanjize の設定。
 
         Returns:
             pl.Expr: 漢数字文字列に変換されたエクスプレッション。
+
+        References:
+            <https://github.com/nagataaaas/kanjize>
         """
         return KanjizeExpr(self._expr).to_kanji(config=config)
 
@@ -108,6 +113,9 @@ class JapaneseExpr:
 
         Returns:
             pl.Expr: 数値に変換されたエクスプレッション (Int64)。
+
+        References:
+            <https://github.com/nagataaaas/kanjize>
         """
         return KanjizeExpr(self._expr).to_number()
 
@@ -142,7 +150,7 @@ class JapaneseDataFrame:
         self,
         path: Union[str, pathlib.Path],
         encoding: str = "utf-8",
-        **kwargs,
+        **kwargs: Any,
     ) -> None:
         """
         指定されたエンコーディングでDataFrameをCSVファイルに書き込みます。
