@@ -1,0 +1,60 @@
+site_name: polars-japanese
+site_description: 'Polars plugin library for Japanese specific features.'
+site_author: 'Jin Tanaka'
+site_url: 'https://tanaka-jin.github.io/polars-japanese/' # Replace with actual URL later
+
+repo_url: 'https://github.com/tanaka-jin/polars-japanese'
+repo_name: 'tanaka-jin/polars-japanese'
+edit_uri: 'edit/main/docs/' # Or the branch you want users to edit from
+
+theme:
+  name: material
+  language: ja # Set default language to Japanese
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.copy
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_root_heading: true
+            show_source: false
+            members_order: source
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+
+nav:
+  - ホーム: index.md
+  - APIリファレンス: api.md
