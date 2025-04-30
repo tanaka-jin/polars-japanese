@@ -5,6 +5,8 @@ import kanjize
 import polars as pl
 from polars.api import register_dataframe_namespace, register_expr_namespace
 
+from polars_japanese.plugin import to_full_width, to_half_width
+
 from .jaconv_util import JaconvExpr
 from .japanera_util import JapaneraExpr
 from .jpholiday_util import JpholidayExpr
@@ -24,7 +26,11 @@ class JapaneseExpr:
         Returns:
             pl.Expr: 半角に変換された文字列を含むエクスプレッション。
         """
-        return JaconvExpr(self._expr).to_half_width()
+        return to_half_width(self._expr)
+        # return JaconvExpr(self._expr).to_half_width()
+
+    # def to_half_width_rs(self) -> pl.Expr:
+    #     return to_half_widrh(self._expr)
 
     def to_full_width(self) -> pl.Expr:
         """
@@ -34,7 +40,8 @@ class JapaneseExpr:
         Returns:
             pl.Expr: 全角に変換された文字列を含むエクスプレッション。
         """
-        return JaconvExpr(self._expr).to_full_width()
+        return to_full_width(self._expr)
+        # return JaconvExpr(self._expr).to_full_width()
 
     def normalize(self) -> pl.Expr:
         """
