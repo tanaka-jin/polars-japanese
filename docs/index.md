@@ -70,7 +70,7 @@ df.ja.to_csv("output_sjis.csv", encoding="shift_jis")
 
 ## 主な機能 (Features)
 
-*   **全角/半角変換:** 文字列の全角と半角を相互に変換します (Powered by [jaconv](https://github.com/ikegami-yukino/jaconv))。
+*   **全角/半角変換:** 文字列の全角と半角を相互に変換します (Rust plugin)。
     *   `to_half_width()`: 全角文字を半角文字に変換します
     *   `to_full_width()`: 半角文字を全角文字に変換します
     *   `normalize()`: 全角/半角文字を統一的に正規化します。Unicode NFKC形式で正規化します。
