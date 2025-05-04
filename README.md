@@ -19,7 +19,7 @@ https://polars-japanese.readthedocs.io/ja/latest/
 ## インストール (Installation)
 
 ```bash
-pip install git+https://github.com/tanaka-jin/polars-japanese
+pip install polars-japanese
 ```
 
 ## 使い方 (Usage)
