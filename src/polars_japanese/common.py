@@ -7,7 +7,6 @@ from polars.api import register_dataframe_namespace, register_expr_namespace
 
 from polars_japanese.plugin import to_full_width, to_half_width
 
-# from .jaconv_util import JaconvExpr
 from .japanera_util import JapaneraExpr
 from .jpholiday_util import JpholidayExpr
 from .kanjize_util import KanjizeExpr
