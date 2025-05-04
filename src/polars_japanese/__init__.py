@@ -9,4 +9,5 @@ __all__ = [
     "JapaneraExpr",
     "KanjizeExpr",
     "JpholidayExpr",
+    "NormalizeExpr",
 ]

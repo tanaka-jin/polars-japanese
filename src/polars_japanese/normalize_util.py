@@ -3,12 +3,10 @@ import polars as pl
 
 class NormalizeExpr:
     """
-    Polars Expression for Japanese text normalization.
+    日本語テキスト正規化のためのPolars Expression
 
-    This class provides methods to normalize Japanese
-    text within Polars expressions,
-    based on NFKC normalization followed by specific
-    Japanese character replacements.
+    このクラスは、NFKCによる正規化と特定の日本語文字の置換に基づいて、
+    Polars expressions内で日本語テキストを正規化するメソッドを提供します。
     """
 
     def __init__(self, expr: pl.Expr):
@@ -16,51 +14,43 @@ class NormalizeExpr:
 
     def normalize(self) -> pl.Expr:
         """
-        Normalize Japanese text in the expression.
+        式内の日本語テキストを正規化します。
 
-        Applies NFKC normalization first, then applies specific rules:
-        - Unifies hyphens/minus signs to half-width '-'.
-        - Unifies long vowel sounds to full-width 'ー'.
-        - Unifies tildes to full-width '～'.
-        - Unifies exclamation marks to half-width '!'.
-        - Unifies question marks to half-width '?'.
-        - Unifies spaces to a single half-width space ' '.
+        まずNFKC正規化を適用し、その後以下の特定のルールを適用します：
+        - ハイフン/マイナス記号を半角'-'に統一
+        - 長音記号を全角'ー'に統一
+        - チルダを全角'～'に統一
+        - 感嘆符を半角'!'に統一
+        - 疑問符を半角'?'に統一
+        - スペースを半角スペース' 'に統一
+
+        正規化ルールは以下を参考にしています：
+        https://github.com/ikegami-yukino/jaconv
 
         Returns:
-            pl.Expr: An expression representing the normalized strings.
+            pl.Expr: 正規化された文字列を表す式
         """
-        # 1. Apply NFKC normalization
+        # 1. NFKC正規化を適用
         normalized_expr = self._expr.str.normalize("NFKC")
 
-        # 2. Apply Japanese-specific normalization rules using replace_all
-        #    Note: Order might matter depending on the rules.
-        #    NFKC should handle most full-width/half-width conversions
-        #    for standard characters.
-        #    We focus on specific symbols mentioned in jaconv's documentation.
+        # 2. 日本語特有の正規化ルールをreplace_allを使用して適用
         normalized_expr = (
             normalized_expr
-            # Unify hyphens/minus signs to half-width '-'
-            .str.replace_all(r"[－‐]", "-", literal=False)
-            # Ensure long vowel sound is full-width 'ー'
-            # (NFKC might handle this, but explicitly ensure)
-            # .str.replace_all("ｰ", "ー", literal=True)
-            # # NFKC likely covers this
-            # Unify tildes to full-width '～'
-            .str.replace_all("～", "~", literal=True)
-            # Unify exclamation marks to half-width '!'
-            # (NFKC likely covers this)
+            # 長音記号の統一（全角'ー'に）
+            .str.replace_all(r"[〜～﹣－—―━─]", "ー", literal=False)
+            # ハイフン類の統一（半角'-'に）
+            .str.replace_all(r"[―‐˗֊‐‑‒–⁃⁻₋−]", "-", literal=False)
+            # クォートの統一
+            .str.replace_all("'", "'", literal=True)
+            .str.replace_all('"', '"', literal=True)
+            .str.replace_all('"', "``", literal=True)
+            # 感嘆符を半角に
             .str.replace_all("！", "!", literal=True)
-            # Unify question marks to half-width '?'
-            # (NFKC likely covers this)
+            # 疑問符を半角に
             .str.replace_all("？", "?", literal=True)
-            # Unify spaces: replace full-width space and
-            # collapse multiple spaces
-            .str.replace_all(
-                "　", " ", literal=True
-            )  # Full-width to half-width
-            .str.replace_all(
-                r"\s+", " ", literal=False
-            )  # Collapse multiple spaces
-            .str.strip_chars()  # Trim leading/trailing whitespace
+            # スペースの統一
+            .str.replace_all("　", " ", literal=True)
+            .str.replace_all(r"\s+", " ", literal=False)
+            .str.strip_chars()
         )
         return normalized_expr
