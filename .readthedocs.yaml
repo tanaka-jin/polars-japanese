@@ -9,6 +9,9 @@ build:
   os: ubuntu-22.04
   tools:
     python: "3.11" # Specify a Python version compatible with dependencies
+    rust: "latest"
+  apt_packages:
+    - build-essential  # コンパイル用ツール群
 
 # Build documentation in the docs/ directory with Sphinx
 mkdocs:
