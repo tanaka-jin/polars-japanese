@@ -303,12 +303,6 @@ wheels = [
 ]
 
 [[package]]
-name = "jaconv"
-version = "0.4.0"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/d2/e1/670cefc7f00b0e1890e114a37a98ea425f7e06131342aeb9636856ac663c/jaconv-0.4.0.tar.gz", hash = "sha256:32da74b247f276e09a52d6b35c153df2387965cb85a6f034cc8af21d446f8161", size = 17402, upload_time = "2024-07-25T16:35:24.75Z" }
-
-[[package]]
 name = "japanera"
 version = "2.1.2"
 source = { registry = "https://pypi.org/simple" }
@@ -703,7 +697,6 @@ name = "polars-japanese"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
-    { name = "jaconv" },
     { name = "japanera" },
     { name = "jpholiday" },
     { name = "kanjize" },
@@ -725,7 +718,6 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "jaconv", specifier = ">=0.4.0" },
     { name = "japanera", specifier = ">=2.1.2" },
     { name = "jpholiday", specifier = ">=1.0.1" },
     { name = "kanjize", specifier = ">=1.5.0" },
