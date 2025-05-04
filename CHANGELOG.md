@@ -1,22 +1,20 @@
-# Changelog
+# 更新履歴
 
 ## [Unreleased]
 
-### Added
-- Added `DataFrame.ja.to_csv` method to write DataFrame to CSV with specified encoding.
-
-### Changed
-- Modified `Expr.ja.normalize` to use a Python implementation based on NFKC normalization and custom rules (e.g., unifying hyphens, tildes, spaces), removing the `jaconv` dependency for this specific function.
-
+## [0.1.1] - 2024-05-04
 ### Fixed
-- Fixed a bug in `is_businessday` function.
+- plugin Importのエラーを修正
 
-## [0.1.0] - 2024-04-18
+## [0.1.0] - 2024-05-04
 
 ### Added
-- Initial release of polars-japanese.
-- Provides Japanese-specific functionalities for Polars DataFrames, including:
-  - Full-width/half-width character conversion
-  - Kanji numeral conversion
-  - Japanese Era/Western calendar conversion
-  - Holiday determination
+- polars-japaneseの初回リリース
+- Polars DataFrameに日本語特有の機能を追加:
+  - 半角/全角文字変換 (`to_full_width`, `to_half_width`)
+  - 漢数字変換 (`convert_numbers`, `to_kanji`)
+  - 和暦/西暦変換 (`to_era`, `from_era`)
+  - 日本の祝日判定 (`is_holiday`, `is_businessday`)
+  - CSVファイルの文字エンコーディング指定による読み書き
+  - 文字列の正規化 (NFKC準拠)
+

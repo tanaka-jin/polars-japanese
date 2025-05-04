@@ -15,12 +15,6 @@ Polars DataFrame/Expression API に、日本語処理や日本固有の操作に
 ## インストール (Installation)
 
 ```bash
-pip install git+https://github.com/tanaka-jin/polars-japanese
-```
-
-または、PyPIからインストールする場合 (リリース後):
-
-```bash
 pip install polars-japanese
 ```
 
