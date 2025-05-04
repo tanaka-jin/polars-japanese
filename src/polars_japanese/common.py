@@ -7,10 +7,11 @@ from polars.api import register_dataframe_namespace, register_expr_namespace
 
 from polars_japanese.plugin import to_full_width, to_half_width
 
-from .jaconv_util import JaconvExpr
+# from .jaconv_util import JaconvExpr
 from .japanera_util import JapaneraExpr
 from .jpholiday_util import JpholidayExpr
 from .kanjize_util import KanjizeExpr
+from .normalize_util import NormalizeExpr
 
 
 @register_expr_namespace("ja")
@@ -27,10 +28,6 @@ class JapaneseExpr:
             pl.Expr: 半角に変換された文字列を含むエクスプレッション。
         """
         return to_half_width(self._expr)
-        # return JaconvExpr(self._expr).to_half_width()
-
-    # def to_half_width_rs(self) -> pl.Expr:
-    #     return to_half_widrh(self._expr)
 
     def to_full_width(self) -> pl.Expr:
         """
@@ -41,16 +38,24 @@ class JapaneseExpr:
             pl.Expr: 全角に変換された文字列を含むエクスプレッション。
         """
         return to_full_width(self._expr)
-        # return JaconvExpr(self._expr).to_full_width()
 
     def normalize(self) -> pl.Expr:
         """
-        エクスプレッションの文字列の正規化処理
+        エクスプレッションの文字列を正規化します。
+
+        Unicode正規化 (NFKC) を適用した後、以下の日本語特有のルールを適用:
+        - ハイフン/マイナス記号 (`‐`, `－` など) を半角ハイフン (`-`) に統一。
+        - チルダ (`~`) を全角チルダ (`～`) に統一。
+        - 感嘆符 (`！`) を半角 (`!`) に統一。
+        - 疑問符 (`？`) を半角 (`?`) に統一。
+        - 全角スペース (`　`) を半角スペース (` `) に変換し、
+          連続する空白文字を単一の半角スペースにまとめ、先頭と末尾の空白を削除。
 
         Returns:
             pl.Expr: 正規化された文字列を含むエクスプレッション。
         """
-        return JaconvExpr(self._expr).normalize()
+        # Use the new Python-based implementation
+        return NormalizeExpr(self._expr).normalize()
 
     def to_datetime(
         self, format: str = "%-K%-y年%m月%d日", raise_error: bool = True
