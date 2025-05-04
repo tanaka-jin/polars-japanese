@@ -5,10 +5,12 @@ import kanjize
 import polars as pl
 from polars.api import register_dataframe_namespace, register_expr_namespace
 
-from .jaconv_util import JaconvExpr
+from polars_japanese.plugin import to_full_width, to_half_width
+
 from .japanera_util import JapaneraExpr
 from .jpholiday_util import JpholidayExpr
 from .kanjize_util import KanjizeExpr
+from .normalize_util import NormalizeExpr
 
 
 @register_expr_namespace("ja")
@@ -24,7 +26,7 @@ class JapaneseExpr:
         Returns:
             pl.Expr: 半角に変換された文字列を含むエクスプレッション。
         """
-        return JaconvExpr(self._expr).to_half_width()
+        return to_half_width(self._expr)
 
     def to_full_width(self) -> pl.Expr:
         """
@@ -34,16 +36,27 @@ class JapaneseExpr:
         Returns:
             pl.Expr: 全角に変換された文字列を含むエクスプレッション。
         """
-        return JaconvExpr(self._expr).to_full_width()
+        return to_full_width(self._expr)
 
     def normalize(self) -> pl.Expr:
         """
-        エクスプレッションの文字列の正規化処理
+        式内の日本語テキストを正規化します。
+
+        まずNFKC正規化を適用し、その後以下の特定のルールを適用します：
+        - ハイフン/マイナス記号を半角'-'に統一
+        - 長音記号を全角'ー'に統一
+        - チルダを全角'～'に統一
+        - 感嘆符を半角'!'に統一
+        - 疑問符を半角'?'に統一
+        - スペースを半角スペース' 'に統一
+
+        正規化ルールは以下を参考にしています：
+        https://github.com/ikegami-yukino/jaconv
 
         Returns:
-            pl.Expr: 正規化された文字列を含むエクスプレッション。
+            pl.Expr: 正規化された文字列を表す式
         """
-        return JaconvExpr(self._expr).normalize()
+        return NormalizeExpr(self._expr).normalize()
 
     def to_datetime(
         self, format: str = "%-K%-y年%m月%d日", raise_error: bool = True

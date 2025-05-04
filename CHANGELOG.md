@@ -5,6 +5,9 @@
 ### Added
 - Added `DataFrame.ja.to_csv` method to write DataFrame to CSV with specified encoding.
 
+### Changed
+- Modified `Expr.ja.normalize` to use a Python implementation based on NFKC normalization and custom rules (e.g., unifying hyphens, tildes, spaces), removing the `jaconv` dependency for this specific function.
+
 ### Fixed
 - Fixed a bug in `is_businessday` function.
 

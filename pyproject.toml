@@ -10,7 +10,6 @@ license = { file="LICENSE" }
 
 requires-python = ">=3.9"
 dependencies = [
-    "jaconv>=0.4.0",
     "japanera>=2.1.2",
     "jpholiday>=1.0.1",
     "kanjize>=1.5.0",
@@ -22,8 +21,12 @@ Homepage = "https://github.com/tanaka-jin/polars-japanese"
 Repository = "https://github.com/tanaka-jin/polars-japanese"
 
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["maturin>=1.8.3"]
+build-backend = "maturin"
+
+[tool.maturin]
+manifest-path = "polars_japanese_plugin/Cargo.toml"
+features = ["pyo3/extension-module"]
 
 [tool.ruff]
 line-length = 79
@@ -64,4 +67,5 @@ dev = [
     "pytest>=8.3.5",
     "pytest-cov>=6.1.1",
     "ruff>=0.11.5",
+    "patchelf>=0.17.2.2",
 ]

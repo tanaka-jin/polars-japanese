@@ -68,10 +68,10 @@ df.ja.to_csv("output_sjis.csv", encoding="shift_jis")
 
 ## 主な機能 (Features)
 
-*   **全角/半角変換:** 文字列の全角と半角を相互に変換します (Powered by [jaconv](https://github.com/ikegami-yukino/jaconv))。
-    *   `to_half_width()`: 全角文字を半角文字に変換します
-    *   `to_full_width()`: 半角文字を全角文字に変換します
-    *   `normalize()`: 全角/半角文字を統一的に正規化します。Unicode NFKC形式で正規化します。
+*   **全角/半角変換・正規化:**
+    *   `to_half_width()`: 全角文字を半角文字に変換します (Rust Plugin)。
+    *   `to_full_width()`: 半角文字を全角文字に変換します (Rust Plugin)。
+    *   `normalize()`: Unicode正規化 (NFKC) を行い、さらに日本語テキストでよく問題になる記号やスペースを統一的に処理します（例: ハイフン類を半角 `-` に、チルダ類を全角 `～` に、スペースを半角スペース ` ` に統一）。
 *   **漢数字変換:** 文字列中の漢数字をアラビア数字に変換します (Powered by [kanjize](https://github.com/takavfx/kanjize))。
     *   `to_number()`: 漢数字（例: "千二百三十四"）を整数（例: 1234）に変換します
     *   `to_kanji()`: 数値を漢数字に変換します。`config`引数で`KanjizeConfiguration`を指定できます。
