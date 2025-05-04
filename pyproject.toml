@@ -25,8 +25,9 @@ requires = ["maturin>=1.8.3"]
 build-backend = "maturin"
 
 [tool.maturin]
-manifest-path = "polars_japanese_plugin/Cargo.toml"
+manifest-path = "./Cargo.toml"
 features = ["pyo3/extension-module"]
+python-source = "python"
 
 [tool.ruff]
 line-length = 79
@@ -40,11 +41,11 @@ select = [
 ]
 
 [tool.pytest.ini_options]
-pythonpath = ["src"] # Add src to pythonpath
+pythonpath = ["python"]
 testpaths = ["tests"]
 
 [tool.coverage.run]
-source = ["src"]
+source = ["python"]
 omit = ["tests/*"]
 
 [tool.coverage.report]
@@ -52,7 +53,7 @@ fail_under = 80
 show_missing = true
 
 [tool.mypy]
-files = ["src"]
+files = ["python"]
 python_version = "3.9"
 warn_return_any = true
 warn_unused_configs = true

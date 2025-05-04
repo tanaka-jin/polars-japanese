@@ -1424,7 +1424,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polars_japanese_plugin"
+name = "polars_japanese"
 version = "0.1.0"
 dependencies = [
  "mojimoji-rs",

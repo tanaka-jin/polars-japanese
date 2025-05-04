@@ -7,15 +7,15 @@ from polars.plugins import register_plugin_function
 
 # Rust でビルドされた .so ファイルへのパスを計算
 PROJECT_ROOT = Path(__file__).parent.parent.parent.parent
-TARGET_DIR = PROJECT_ROOT / "polars_japanese_plugin" / "target" / "release"
+TARGET_DIR = PROJECT_ROOT / "target" / "release"
 
 # OSに応じてライブラリの拡張子を決定
 if sys.platform == "win32":
-    LIB_NAME = "polars_japanese_plugin.dll"
+    LIB_NAME = "polars_japanese.dll"
 elif sys.platform == "darwin":
-    LIB_NAME = "libpolars_japanese_plugin.dylib"
+    LIB_NAME = "libpolars_japanese.dylib"
 else:
-    LIB_NAME = "libpolars_japanese_plugin.so"
+    LIB_NAME = "libpolars_japanese.so"
 
 PLUGIN_PATH = TARGET_DIR / LIB_NAME
 
