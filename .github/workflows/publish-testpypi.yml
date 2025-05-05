@@ -34,9 +34,12 @@ jobs:
 
       - name: Install runtime dependencies via uv
         run: uv pip install . --system  && uv pip install pytest --system
+<<<<<<< HEAD
 
       - name: Install maturin
         run: uv pip install maturin --system
+=======
+>>>>>>> 319ab04be45abdf3a1ba85ffb932d6c29343e85f
 
       - name: Build wheel
         run: uv run maturin build --release
