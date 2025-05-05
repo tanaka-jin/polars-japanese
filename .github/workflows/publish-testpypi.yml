@@ -36,9 +36,5 @@ jobs:
         run: uv run maturin build --release
 
       - name: Publish to TestPyPI
-        run: |
-          maturin publish \
-            --username __token__ \
-            --password ${{ secrets.TEST_PYPI_API_TOKEN }} \
-            --repository-url https://test.pypi.org/legacy/
+        run: maturin publish --username __token__ --password ${{ secrets.TEST_PYPI_API_TOKEN }} --repository-url https://test.pypi.org/legacy/
 
