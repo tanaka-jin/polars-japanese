@@ -33,7 +33,7 @@ jobs:
         run: pip install uv
 
       - name: Install runtime dependencies via uv
-        run: uv pip install . --system  && uv pi install pytest --system
+        run: uv pip install . --system  && uv pip install pytest --system
 
       - name: Build wheel
         run: uv run maturin build --release
