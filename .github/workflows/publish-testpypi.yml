@@ -1,0 +1,55 @@
+name: Build & Publish to TestPyPI
+
+on:
+  push:
+    branches:
+      - main
+    workflow_dispatch:
+
+jobs:
+  build-and-publish:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        python-version: [3.11]  # 必要な Python バージョンを列挙
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: minimal
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: 'x64'
+
+      - name: Install uv CLI
+        run: pip install uv
+
+      - name: Install runtime dependencies via uv
+        run: uv install .[dev]
+
+      - name: Build wheel
+        run: uv run maturin build --release
+
+      - name: Install built wheel and run tests
+        run: |
+          uv run pip install target/wheels/*.whl
+          uv run pytest
+
+      # - name: Publish to TestPyPI
+      #   env:
+      #     # リポジトリの Settings → Secrets に TEST_PYPI_API_TOKEN を登録しておく
+      #     TEST_PYPI_API_TOKEN: ${{ secrets.TEST_PYPI_API_TOKEN }}
+      #   run: |
+      #     maturin publish \
+      #       --release \
+      #       --repository testpypi \
+      #       --username __token__ \
+      #       --password "$TEST_PYPI_API_TOKEN"
