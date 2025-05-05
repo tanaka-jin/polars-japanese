@@ -33,7 +33,7 @@ jobs:
         run: pip install uv
 
       - name: Install runtime dependencies via uv
-        run: uv pip install . --system
+        run: uv pip install -e . --system
 
       - name: Install maturin
         run: uv pip install maturin --system
