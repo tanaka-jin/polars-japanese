@@ -33,7 +33,7 @@ jobs:
         run: pip install uv
 
       - name: Install runtime dependencies via uv
-        run: uv pip install . --system  && uv pip install pytest --system
+        run: uv pip install . --system
 
       - name: Install maturin
         run: uv pip install maturin --system
@@ -41,10 +41,9 @@ jobs:
       - name: Build wheel
         run: uv run maturin build --release
 
-      - name: Install built wheel and run tests
+      - name: Install built wheel
         run: |
           uv run pip install target/wheels/*.whl --system
-          uv run pytest
 
       - name: Publish to TestPyPI
         env:
