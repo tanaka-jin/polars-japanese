@@ -41,5 +41,5 @@ jobs:
       # 5) ビルド＆Publish
       - name: Build & Publish to PyPI
         run: |
-          maturin build --release --compatibility abi3
+          maturin build --release
           maturin publish --skip-existing --username __token__ --password ${{ secrets.PYPI_API_TOKEN }}
