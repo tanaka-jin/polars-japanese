@@ -1,0 +1,42 @@
+name: Build & Publish PyPI
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build-and-publish:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: [3.8, 3.9, 3.10, 3.11]
+    steps:
+      # 1) コードをチェックアウト
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2) Python をセットアップ
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # 3) Rust ツールチェインをセットアップ
+      - name: Setup Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: minimal
+
+      # 4) maturin をインストール
+      - name: Install maturin
+        run: pip install maturin
+
+      # 5) ビルド＆Publish
+      - name: Build & Publish to PyPI
+        run: |
+          maturin build --release 
+          maturin publish --username __token__ --password ${{ secrets.PYPI_API_TOKEN }}
