@@ -33,7 +33,7 @@ jobs:
         run: pip install uv
 
       - name: Install runtime dependencies via uv
-        run: uv install .[dev]
+        run: uv pip install .[dev]
 
       - name: Build wheel
         run: uv run maturin build --release
