@@ -43,7 +43,7 @@ jobs:
 
       - name: Install built wheel
         run: |
-          uv run pip install target/wheels/*.whl --system
+          uv pip install target/wheels/*.whl --system
 
       - name: Publish to TestPyPI
         env:
