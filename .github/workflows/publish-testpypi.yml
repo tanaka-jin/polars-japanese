@@ -1,9 +1,6 @@
 name: Build & Publish to TestPyPI
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
@@ -11,7 +8,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        python-version: [3.11]  # 必要な Python バージョンを列挙
+        python-version: [3.11]
 
     steps:
       - name: Checkout repository
@@ -32,23 +29,13 @@ jobs:
       - name: Install uv CLI
         run: pip install uv
 
-      # - name: Install runtime dependencies via uv
-      #   run: uv pip install -e . --system
-
       - name: Install maturin
         run: uv pip install maturin --system
 
       - name: Build wheel
         run: uv run maturin build --release
 
-      # - name: Install built wheel
-      #   run: |
-      #     uv pip install target/wheels/*.whl --system
-
       - name: Publish to TestPyPI
-        env:
-          # リポジトリの Settings → Secrets に TEST_PYPI_API_TOKEN を登録しておく
-          TEST_PYPI_API_TOKEN: ${{ secrets.TEST_PYPI_API_TOKEN }}
         run: |
           maturin publish \
             --username __token__ \
