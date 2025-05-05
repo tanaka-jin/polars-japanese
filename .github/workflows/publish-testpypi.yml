@@ -32,8 +32,8 @@ jobs:
       - name: Install uv CLI
         run: pip install uv
 
-      - name: Install runtime dependencies via uv
-        run: uv pip install -e . --system
+      # - name: Install runtime dependencies via uv
+      #   run: uv pip install -e . --system
 
       - name: Install maturin
         run: uv pip install maturin --system
@@ -41,9 +41,9 @@ jobs:
       - name: Build wheel
         run: uv run maturin build --release
 
-      - name: Install built wheel
-        run: |
-          uv pip install target/wheels/*.whl --system
+      # - name: Install built wheel
+      #   run: |
+      #     uv pip install target/wheels/*.whl --system
 
       - name: Publish to TestPyPI
         env:
