@@ -3,7 +3,8 @@ name: Build & Publish to TestPyPI
 on:
   push:
     branches:
-      - main   # main ブランチにプッシュされたら動作
+      - main
+    workflow_dispatch:
 
 jobs:
   build-and-publish:
