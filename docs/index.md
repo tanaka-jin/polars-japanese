@@ -59,7 +59,7 @@ print(df)
 # │ null           ┆ 1970-12-04          ┆ true       ┆ 123     ┆ 123        │
 # └────────────────┴─────────────────────┴────────────┴─────────┴────────────┘
 
-df.ja.to_csv("output_sjis.csv", encoding="shift_jis")
+df.ja.write_csv("output_sjis.csv", encoding="shift_jis")
 ```
 
 ## 主な機能 (Features)
@@ -87,4 +87,4 @@ df.ja.to_csv("output_sjis.csv", encoding="shift_jis")
     *   `ja_pref.to_romaji()`: 都道府県名またはコードを一般的なローマ字表記（大文字）に変換します。
     *   `ja_pref.to_region()`: 都道府県名またはコードを地方名（例: 「関東」「近畿」）に変換します。
 *   **CSVエンコーディング指定出力:** DataFrameを指定したエンコーディングでCSVファイルに出力します。
-    *   `DataFrame.ja.to_csv(path, encoding="shift_jis", **kwargs)`: DataFrameをCSVファイルに書き込みます。
+    *   `DataFrame.ja.write_csv(path, encoding="shift_jis", **kwargs)`: DataFrameをCSVファイルに書き込みます。
