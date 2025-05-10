@@ -77,5 +77,7 @@ df.ja.to_csv("output_sjis.csv", encoding="shift_jis")
 *   **祝日判定:** 指定された日付が日本の祝日かどうかを判定します (Powered by [jpholiday](https://github.com/jpholiday/jpholiday))。
     *   `is_holiday()`: 日付が祝日であれば `True` を返します
     *   `is_business_day()`: 日付が営業日であれば `True` を返します
+*   **日本語の曜日取得:** Date型またはDatetime型の列から、日本語の曜日（"月曜日"、"火曜日"など）を取得できます。
+    *   `to_weekday_name(format: str = "%A")`: Date/Datetime を日本語の曜日に変換します。`format`引数で `"%A"` (フル形式、例: "月曜日") または `"%a"` (短縮形式、例: "月") を指定できます。
 *   **CSVエンコーディング指定出力:** DataFrameを指定したエンコーディングでCSVファイルに出力します。
     *   `DataFrame.ja.to_csv(path, encoding="shift_jis", **kwargs)`: DataFrameをCSVファイルに書き込みます。
