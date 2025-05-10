@@ -1,10 +1,12 @@
+from typing import Union
+
 import polars as pl
 from polars.api import register_expr_namespace
 
 # --- データ定義 ---
 # 都道府県コードから各種表記へのマッピング
 # fmt: off
-_PREFECTURE_DATA: dict[int, dict[str, str | int]] = {
+_PREFECTURE_DATA: dict[int, dict[str, Union[str, int]]] = {
     1: {"code": 1, "kanji": "北海道", "hira": "ほっかいどう", "kana": "ホッカイドウ", "roman": "HOKKAIDO", "region": "北海道"},  # noqa: E501
     2: {"code": 2, "kanji": "青森県", "hira": "あおもりけん", "kana": "アオモリケン", "roman": "AOMORI", "region": "東北"},  # noqa: E501
     3: {"code": 3, "kanji": "岩手県", "hira": "いわてけん", "kana": "イワテケン", "roman": "IWATE", "region": "東北"},  # noqa: E501
@@ -155,9 +157,7 @@ class PrefectureExpr:
         表記揺れ（「県」の有無など）も吸収します。
         該当しない場合はnullになります。
         """
-        normalized_expr = (
-            self._expr.cast(pl.Utf8).ja.normalize().str.to_uppercase()
-        )
+        normalized_expr = self._expr.cast(pl.Utf8).ja.normalize().str.to_uppercase()
         return normalized_expr.replace_strict(
             _ANY_TO_CODE_MAP, default=None, return_dtype=pl.Int64
         )
