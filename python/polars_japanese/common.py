@@ -7,6 +7,7 @@ from polars.api import register_dataframe_namespace, register_expr_namespace
 
 from polars_japanese.plugin import to_full_width, to_half_width
 
+from .datetime_util import DatetimeUtilityExpr
 from .japanera_util import JapaneraExpr
 from .jpholiday_util import JpholidayExpr
 from .kanjize_util import KanjizeExpr
@@ -153,13 +154,32 @@ class JapaneseExpr:
         """
         return JpholidayExpr(self._expr).is_business_day()
 
+    def to_weekday_name(self, format: str = "%A") -> pl.Expr:
+        """
+        Date型またはDatetime型のエクスプレッションを日本語の曜日文字列に変換します。
+
+        入力データがNoneの場合はNoneを返します。
+
+        Args:
+            format (str, optional): 出力フォーマット。
+                "%A" (デフォルト): "月曜日", "火曜日", ...
+                "%a": "月", "火", ...
+
+        Returns:
+            pl.Expr: 日本語の曜日文字列を含むエクスプレッション。
+
+        Raises:
+            ValueError: サポートされていないフォーマットが指定された場合。
+        """
+        return DatetimeUtilityExpr(self._expr).to_weekday_name(format=format)
+
 
 @register_dataframe_namespace("ja")
 class JapaneseDataFrame:
     def __init__(self, df: pl.DataFrame):
         self._df = df
 
-    def to_csv(
+    def write_csv(
         self,
         path: Union[str, pathlib.Path],
         encoding: str = "utf-8",
@@ -183,7 +203,7 @@ class JapaneseDataFrame:
             >>> import polars_japanese # noqa: F401
             >>> df = pl.DataFrame({"col1": ["テスト", "一"], "col2": [1, 2]})
             >>> # Shift-JISエンコーディングでCSVに書き込む
-            >>> # df.ja.to_csv("output.csv", encoding="shift_jis")
+            >>> # df.ja.write_csv("output.csv", encoding="shift_jis")
         """
         try:
             # ファイルを開く前にエンコーディングが有効か確認

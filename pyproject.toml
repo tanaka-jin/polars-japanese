@@ -31,7 +31,7 @@ python-source = "python"
 module-name = "polars_japanese"
 
 [tool.ruff]
-line-length = 79
+line-length = 88
 
 [tool.ruff.lint]
 select = [
