@@ -6,6 +6,9 @@
 - 都道府県コードから地方名（北海道、東北など）への変換機能を追加 (`ja_pref.to_region`)
 - `Expr.ja.to_weekday_name(format: str = "%A")` を追加し、Date/Datetimeを日本語の曜日文字列に変換できるようにしました。`"%A"`（例: "月曜日"）と`"%a"`（例: "月"）のフォーマットをサポートします。
 
+### Fixed
+- `to_csv` を `write_csv` に変更
+
 ## [0.1.2] - 2024-05-05
 ### Fixed
 - WindowsでのBuildを修正
