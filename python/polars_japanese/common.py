@@ -179,7 +179,7 @@ class JapaneseDataFrame:
     def __init__(self, df: pl.DataFrame):
         self._df = df
 
-    def to_csv(
+    def write_csv(
         self,
         path: Union[str, pathlib.Path],
         encoding: str = "utf-8",
@@ -203,7 +203,7 @@ class JapaneseDataFrame:
             >>> import polars_japanese # noqa: F401
             >>> df = pl.DataFrame({"col1": ["テスト", "一"], "col2": [1, 2]})
             >>> # Shift-JISエンコーディングでCSVに書き込む
-            >>> # df.ja.to_csv("output.csv", encoding="shift_jis")
+            >>> # df.ja.write_csv("output.csv", encoding="shift_jis")
         """
         try:
             # ファイルを開く前にエンコーディングが有効か確認
