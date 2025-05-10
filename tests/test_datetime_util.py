@@ -116,7 +116,7 @@ def test_to_japanese_weekday_invalid_format():
     df = pl.DataFrame({"dates": [date(2024, 5, 10)]})
     with pytest.raises(
         ValueError,
-        match="Unsupported format string: %X. Supported formats are '%A', '%a'.",
+        match="Unsupported format string: %X. Supported formats: '%A', '%a'.",
     ):
         df.with_columns(weekday_ja=pl.col("dates").ja.to_weekday_name(format="%X"))
 
