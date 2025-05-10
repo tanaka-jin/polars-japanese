@@ -1,10 +1,10 @@
 # 更新履歴
 
-## [Unreleased]
+## [0.2.0] - 2025-05-10
 ### Added
 - 都道府県名と都道府県コードの相互変換機能を追加 (`ja_pref.to_code`, `ja_pref.to_kanji`, `ja_pref.to_hiragana`, `ja_pref.to_katakana`, `ja_pref.to_romaji`)
 - 都道府県コードから地方名（北海道、東北など）への変換機能を追加 (`ja_pref.to_region`)
-- `Expr.ja.to_weekday_name(format: str = "%A")` を追加し、Date/Datetimeを日本語の曜日文字列に変換できるようにしました。`"%A"`（例: "月曜日"）と`"%a"`（例: "月"）のフォーマットをサポートします。
+- `Expr.ja.to_weekday_name(format: str = "%A")` を追加し、Date/Datetimeを日本語の曜日文字列に変換する機能を追加。`"%A"`（例: "月曜日"）と`"%a"`（例: "月"）のフォーマットをサポート。
 
 ### Fixed
 - `to_csv` を `write_csv` に変更
