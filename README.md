@@ -13,7 +13,7 @@ Polars DataFrame/Expression API に、日本語処理や日本固有の操作に
 
 ## ドキュメント (Documentation)
 
-https://polars-japanese.readthedocs.io/ja/latest/
+https://polars-japanese.readthedocs.io/ja/
 
 
 ## インストール (Installation)
