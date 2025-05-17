@@ -1,10 +1,9 @@
 # 更新履歴
 
-## [Unpublised]
+## [0.3.1] - 2025-05-17
 ### Fixed
 - fix docs URL in README
 
-## [0.3.0] - 2025-05-17
 ### Added
 - `Expr.ja.to_jst` DatetimeをJSTに変換する処理の追加
 
