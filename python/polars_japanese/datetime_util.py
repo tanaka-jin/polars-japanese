@@ -57,11 +57,15 @@ class DatetimeUtilityExpr:
             .cast(pl.String)
         )
 
-    # 将来的なJST変換メソッドのプレースホルダー
-    # def to_jst(self) -> pl.Expr:
-    #     """
-    #     Datetime型のエクスプレッションを日本標準時(JST, UTC+9)に変換します。
-    #     入力がnaive datetimeの場合はUTCとみなします。
-    #     """
-    #     # 実装は別途
-    #     pass
+    def to_jst(self) -> pl.Expr:
+        """
+        Datetime型のエクスプレッションを日本標準時(JST, UTC+9)に変換します。
+
+        入力がnaive datetimeの場合はUTCとみなします。
+
+        Returns:
+            pl.Expr: 日本標準時(JST)に変換されたDatetime型のエクスプレッション。
+        """
+        return self._expr.cast(pl.Datetime(time_unit="us")).dt.convert_time_zone(
+            "Asia/Tokyo"
+        )

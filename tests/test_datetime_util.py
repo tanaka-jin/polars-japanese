@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import date, datetime, timedelta, timezone
 
 import polars as pl
 import polars_japanese  # noqa: F401
@@ -142,3 +142,31 @@ def test_weekday_values():
 
     assert_frame_equal(result_full, expected_full.to_frame(), check_dtypes=True)
     assert_frame_equal(result_short, expected_short.to_frame(), check_dtypes=True)
+
+
+def test_to_jst():
+    df = pl.DataFrame(
+        {
+            "datetimes": [
+                datetime(2024, 5, 17, 0, 0, 0),
+                datetime(2024, 5, 17, 0, 0, 0, tzinfo=timezone.utc),  # UTC aware
+                datetime(
+                    2024, 5, 16, 15, 0, 0, tzinfo=timezone(timedelta(hours=-5))
+                ),  # EST aware
+                None,
+            ]
+        }
+    )
+    jst_tz = timezone(timedelta(hours=9))
+    expected = pl.DataFrame(
+        {
+            "jst_datetimes": [
+                datetime(2024, 5, 17, 9, 0, 0, tzinfo=jst_tz),
+                datetime(2024, 5, 17, 9, 0, 0, tzinfo=jst_tz),
+                datetime(2024, 5, 17, 5, 0, 0, tzinfo=jst_tz),
+                None,
+            ],
+        }
+    ).select(pl.col("jst_datetimes").cast(pl.Datetime(time_zone="Asia/Tokyo")))
+    result = df.select(jst_datetimes=pl.col("datetimes").ja.to_jst())
+    assert_frame_equal(result, expected, check_dtypes=True)
