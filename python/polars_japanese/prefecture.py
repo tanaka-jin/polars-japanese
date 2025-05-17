@@ -154,6 +154,7 @@ class PrefectureExpr:
     def to_code(self) -> pl.Expr:
         """
         都道府県名（漢字、ひらがな、カタカナ、ローマ字、コード）を都道府県コードに変換します。
+
         表記揺れ（「県」の有無など）も吸収します。
         該当しない場合はnullになります。
         """
@@ -165,6 +166,7 @@ class PrefectureExpr:
     def to_kanji(self) -> pl.Expr:
         """
         都道府県名またはコードを正式な漢字表記（例:「東京都」「神奈川県」）に変換します。
+
         入力が都道府県名の場合、まずコードに変換してから漢字表記にします。
         該当しない場合はnullになります。
         """
@@ -176,6 +178,7 @@ class PrefectureExpr:
     def to_hiragana(self) -> pl.Expr:
         """
         都道府県名またはコードを正式なひらがな表記に変換します。
+
         該当しない場合はnullになります。
         """
         code_expr = self.to_code()
@@ -186,6 +189,7 @@ class PrefectureExpr:
     def to_katakana(self) -> pl.Expr:
         """
         都道府県名またはコードを正式なカタカナ表記に変換します。
+
         該当しない場合はnullになります。
         """
         code_expr = self.to_code()
@@ -196,6 +200,7 @@ class PrefectureExpr:
     def to_romaji(self) -> pl.Expr:
         """
         都道府県名またはコードを一般的なローマ字表記に変換します。
+
         該当しない場合はnullになります。
         """
         code_expr = self.to_code()
@@ -205,8 +210,18 @@ class PrefectureExpr:
 
     def to_region(self) -> pl.Expr:
         """
-        都道府県名またはコードを地方名（北海道、東北、関東など）に変換します。
+        都道府県名またはコードを地方名に変換します。
+
         該当しない場合はnullになります。
+        地方：
+            - 北海道
+            - 東北
+            - 関東
+            - 中部
+            - 近畿
+            - 中国
+            - 四国
+            - 九州・沖縄
         """
         code_expr = self.to_code()
         return code_expr.replace_strict(
