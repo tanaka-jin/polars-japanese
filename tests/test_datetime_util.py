@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import date, datetime, timedelta, timezone
 
 import polars as pl
 import polars_japanese  # noqa: F401
@@ -142,3 +142,78 @@ def test_weekday_values():
 
     assert_frame_equal(result_full, expected_full.to_frame(), check_dtypes=True)
     assert_frame_equal(result_short, expected_short.to_frame(), check_dtypes=True)
+
+
+def test_to_jst_naive_utc():
+    # naive datetime (UTCとみなされる)
+    df = pl.DataFrame({"datetimes": [datetime(2024, 5, 17, 0, 0, 0)]})
+    jst_tz = timezone(timedelta(hours=9))
+    expected = pl.DataFrame(
+        {
+            "jst_datetimes": [
+                datetime(2024, 5, 17, 9, 0, 0, tzinfo=jst_tz),
+            ],
+        }
+    ).select(pl.col("jst_datetimes").cast(pl.Datetime(time_zone="Asia/Tokyo")))
+    result = df.select(jst_datetimes=pl.col("datetimes").ja.to_jst())
+    assert_frame_equal(result, expected, check_dtypes=True)
+
+
+def test_to_jst_aware_utc():
+    # aware datetime (UTC)
+    df = pl.DataFrame(
+        {"datetimes": [datetime(2024, 5, 17, 0, 0, 0, tzinfo=timezone.utc)]}
+    )
+    jst_tz = timezone(timedelta(hours=9))
+    expected = pl.DataFrame(
+        {
+            "jst_datetimes": [
+                datetime(2024, 5, 17, 9, 0, 0, tzinfo=jst_tz),
+            ],
+        }
+    ).select(pl.col("jst_datetimes").cast(pl.Datetime(time_zone="Asia/Tokyo")))
+    result = df.select(jst_datetimes=pl.col("datetimes").ja.to_jst())
+    assert_frame_equal(result, expected, check_dtypes=True)
+
+
+def test_to_jst_aware_est():
+    # aware datetime (EST)
+    est_tz = timezone(timedelta(hours=-5))
+    df = pl.DataFrame({"datetimes": [datetime(2024, 5, 16, 15, 0, 0, tzinfo=est_tz)]})
+    jst_tz = timezone(timedelta(hours=9))
+    expected = pl.DataFrame(
+        {
+            "jst_datetimes": [
+                datetime(2024, 5, 17, 5, 0, 0, tzinfo=jst_tz),
+            ],
+        }
+    ).select(pl.col("jst_datetimes").cast(pl.Datetime(time_zone="Asia/Tokyo")))
+    result = df.select(jst_datetimes=pl.col("datetimes").ja.to_jst())
+    assert_frame_equal(result, expected, check_dtypes=True)
+
+
+def test_to_jst_naive_with_timezone():
+    # naive datetime with specified time_zone (EST)
+    df = pl.DataFrame({"datetimes": [datetime(2024, 5, 16, 15, 0, 0)]})
+    jst_tz = timezone(timedelta(hours=9))
+    expected = pl.DataFrame(
+        {
+            "jst_datetimes": [
+                datetime(2024, 5, 17, 5, 0, 0, tzinfo=jst_tz),
+            ],
+        }
+    ).select(pl.col("jst_datetimes").cast(pl.Datetime(time_zone="Asia/Tokyo")))
+    result = df.select(jst_datetimes=pl.col("datetimes").ja.to_jst(time_zone="EST"))
+    assert_frame_equal(result, expected, check_dtypes=True)
+
+
+def test_to_jst_none():
+    # None値
+    df = pl.DataFrame({"datetimes": [None]})
+    expected = pl.DataFrame(
+        {
+            "jst_datetimes": [None],
+        }
+    ).select(pl.col("jst_datetimes").cast(pl.Datetime(time_zone="Asia/Tokyo")))
+    result = df.select(jst_datetimes=pl.col("datetimes").ja.to_jst())
+    assert_frame_equal(result, expected, check_dtypes=True)

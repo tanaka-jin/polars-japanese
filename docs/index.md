@@ -79,6 +79,8 @@ df.ja.write_csv("output_sjis.csv", encoding="shift_jis")
     *   `ja.is_business_day()`: 日付が営業日であれば `True` を返します
 *   **日本語の曜日取得:** Date型またはDatetime型の列から、日本語の曜日（"月曜日"、"火曜日"など）を取得できます。
     *   `ja.to_weekday_name(format: str = "%A")`: Date/Datetime を日本語の曜日に変換します。`format`引数で `"%A"` (フル形式、例: "月曜日") または `"%a"` (短縮形式、例: "月") を指定できます。
+*   **JST変換:** Datetime型の列を日本標準時(JST)に変換します。
+    *   `ja.to_jst()`: Datetime を JST に変換します。
 *   **都道府県関連処理:** 都道府県名と都道府県コードの相互変換、および地方名への変換を行います。
     *   `ja_pref.to_code()`: 都道府県名（漢字、ひらがな、カタカナ、ローマ字、コード文字列）を都道府県コード（整数）に変換します。
     *   `ja_pref.to_kanji()`: 都道府県名またはコードを正式な漢字表記に変換します。

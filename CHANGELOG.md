@@ -1,5 +1,13 @@
 # 更新履歴
 
+## [0.3.0] - 2025-05-17
+### Added
+- `Expr.ja.to_jst` DatetimeをJSTに変換する処理の追加
+
+### Fixed
+- ドキュメントの修正
+- Pythoonのversionを3.10以上に変更。実装内で仕様しているType Hintに対応するため
+
 ## [0.2.0] - 2025-05-10
 ### Added
 - 都道府県名と都道府県コードの相互変換機能を追加 (`ja_pref.to_code`, `ja_pref.to_kanji`, `ja_pref.to_hiragana`, `ja_pref.to_katakana`, `ja_pref.to_romaji`)

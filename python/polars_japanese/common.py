@@ -173,6 +173,20 @@ class JapaneseExpr:
         """
         return DatetimeUtilityExpr(self._expr).to_weekday_name(format=format)
 
+    def to_jst(self, time_zone: str | None = None) -> pl.Expr:
+        """
+        Datetime型のエクスプレッションを日本標準時(JST, UTC+9)に変換します。
+
+        Args:
+            time_zone (str | None, optional): 入力データのタイムゾーン。
+                Noneの場合、naive datetimeはUTCとみなされます。
+                タイムゾーンが指定された場合、入力データはそのタイムゾーンとして解釈されます。
+
+        Returns:
+            pl.Expr: 日本標準時(JST)に変換されたDatetime型のエクスプレッション。
+        """
+        return DatetimeUtilityExpr(self._expr).to_jst(time_zone)
+
 
 @register_dataframe_namespace("ja")
 class JapaneseDataFrame:
